@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong vs AI</title>
+    <style>
+        canvas {
+            border: 2px solid white;
+            background: black;
+            display: block;
+            margin: 0 auto;
+        }
+        body {
+            background: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .score {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="score">Player: <span id="playerScore">0</span> | AI: <span id="aiScore">0</span></div>
+    <canvas id="pongCanvas" width="800" height="400"></canvas>
+    <script src="pong.js"></script>
+</body>
+</html>
