@@ -5,15 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pong Game</title>
     <style>
-        canvas {
-            display: block;
-            margin: 0 auto;
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
             background-color: #000;
+        }
+        canvas {
+            background-color: #222;
+        }
+        #scoreboard {
+            position: absolute;
+            top: 20px;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-    <canvas id="pongCanvas" width="800" height="600"></canvas>
-    <script src="pong.js"></script>
+    <div id="scoreboard">Player: 0 | AI: 0</div>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script src="script.js"></script>
 </body>
 </html>
