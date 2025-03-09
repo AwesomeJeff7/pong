@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pong vs AI</title>
+    <title>Pong vs AI - Speed Challenge</title>
     <style>
         canvas {
             border: 2px solid white;
@@ -26,11 +26,18 @@
             font-size: 24px;
             margin-bottom: 20px;
         }
+        .stats {
+            color: #aaa;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="score">Player: <span id="playerScore">0</span> | AI: <span id="aiScore">0</span></div>
     <canvas id="pongCanvas" width="800" height="400"></canvas>
+    <div class="stats">Speed Multiplier: <span id="speedMultiplier">1.00</span>x</div>
     <script src="pong.js"></script>
 </body>
 </html>
