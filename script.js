@@ -21,7 +21,7 @@ let aiPaddle = {
     y: canvas.height / 2 - paddleHeight / 2,
     width: paddleWidth,
     height: paddleHeight,
-    dy: 4
+    dy: 2 // Reduced AI speed to make it easier
 };
 
 let ball = {
