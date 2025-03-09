@@ -2,8 +2,10 @@
 const PADDLE_HEIGHT = 100;
 const PADDLE_WIDTH = 10;
 const BALL_SIZE = 10;
-const BALL_SPEED = 5;
+const INITIAL_BALL_SPEED = 4;
 const AI_SPEED = 4;
+const SPEED_INCREASE = 0.05; // Speed increase per paddle hit
+const MAX_SPEED_MULTIPLIER = 3.0; // Maximum speed multiplier
 
 // Game variables
 let canvas, ctx;
@@ -11,6 +13,8 @@ let ballX, ballY, ballSpeedX, ballSpeedY;
 let playerY, aiY;
 let playerScore = 0;
 let aiScore = 0;
+let speedMultiplier = 1.0;
+let baseSpeedX, baseSpeedY;
 
 // Initialize the game
 function init() {
@@ -33,26 +37,53 @@ function init() {
     window.requestAnimationFrame(gameLoop);
 }
 
-// Reset ball to center
+// Reset ball to center and reset speed
 function resetBall() {
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
-    ballSpeedX = BALL_SPEED * (Math.random() > 0.5 ? 1 : -1);
-    ballSpeedY = BALL_SPEED * (Math.random() * 2 - 1);
+    speedMultiplier = 1.0;
+    updateSpeedMultiplierDisplay();
+    
+    // Set initial ball direction
+    baseSpeedX = INITIAL_BALL_SPEED * (Math.random() > 0.5 ? 1 : -1);
+    baseSpeedY = INITIAL_BALL_SPEED * (Math.random() * 2 - 1);
+    
+    // Apply current speed multiplier
+    ballSpeedX = baseSpeedX * speedMultiplier;
+    ballSpeedY = baseSpeedY * speedMultiplier;
+}
+
+// Update speed multiplier display
+function updateSpeedMultiplierDisplay() {
+    document.getElementById('speedMultiplier').textContent = speedMultiplier.toFixed(2);
 }
 
 // Update AI paddle position
 function updateAI() {
     const aiCenter = aiY + PADDLE_HEIGHT / 2;
     const ballCenter = ballY;
+    const difficulty = Math.min(1, speedMultiplier / 2); // AI gets slightly better with speed
     
     if (aiCenter < ballCenter - 35) {
-        aiY += AI_SPEED;
+        aiY += AI_SPEED * (1 + difficulty);
     } else if (aiCenter > ballCenter + 35) {
-        aiY -= AI_SPEED;
+        aiY -= AI_SPEED * (1 + difficulty);
     }
     
     aiY = Math.min(Math.max(aiY, 0), canvas.height - PADDLE_HEIGHT);
+}
+
+// Increase ball speed after paddle hit
+function increaseBallSpeed() {
+    if (speedMultiplier < MAX_SPEED_MULTIPLIER) {
+        speedMultiplier += SPEED_INCREASE;
+        speedMultiplier = Math.min(speedMultiplier, MAX_SPEED_MULTIPLIER);
+        updateSpeedMultiplierDisplay();
+    }
+    
+    // Update ball speeds with new multiplier
+    ballSpeedX = (baseSpeedX * speedMultiplier) * Math.sign(ballSpeedX);
+    ballSpeedY = baseSpeedY * speedMultiplier;
 }
 
 // Check for collisions
@@ -68,7 +99,8 @@ function handleCollisions() {
         ballY <= playerY + PADDLE_HEIGHT) {
         ballSpeedX = -ballSpeedX;
         const relativeIntersectY = (playerY + (PADDLE_HEIGHT / 2)) - ballY;
-        ballSpeedY = -relativeIntersectY * 0.1;
+        ballSpeedY = -(relativeIntersectY * 0.1) * speedMultiplier;
+        increaseBallSpeed();
     }
 
     if (ballX >= canvas.width - PADDLE_WIDTH - BALL_SIZE && 
@@ -76,7 +108,8 @@ function handleCollisions() {
         ballY <= aiY + PADDLE_HEIGHT) {
         ballSpeedX = -ballSpeedX;
         const relativeIntersectY = (aiY + (PADDLE_HEIGHT / 2)) - ballY;
-        ballSpeedY = -relativeIntersectY * 0.1;
+        ballSpeedY = -(relativeIntersectY * 0.1) * speedMultiplier;
+        increaseBallSpeed();
     }
 
     // Score points
