@@ -3,52 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pong vs AI - Speed Challenge</title>
+    <title>Pong Game</title>
     <style>
         canvas {
-            border: 2px solid white;
-            background: black;
             display: block;
             margin: 0 auto;
-        }
-        body {
-            background: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            flex-direction: column;
-        }
-        .score {
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .stats {
-            color: #aaa;
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            margin-top: 10px;
-            text-align: center;
-        }
-        .player-info {
-            color: #aaa;
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            margin-bottom: 10px;
+            background-color: #000;
         }
     </style>
 </head>
 <body>
-    <div class="player-info">Player: AwesomeJeff7 | UTC: <span id="utcTime">2025-03-09 05:25:31</span></div>
-    <div class="score">Player: <span id="playerScore">0</span> | AI: <span id="aiScore">0</span></div>
-    <canvas id="pongCanvas" width="800" height="400"></canvas>
-    <div class="stats">
-        Speed Multiplier: <span id="speedMultiplier">1.00</span>x<br>
-        Hit Count: <span id="hitCount">0</span>
-    </div>
+    <canvas id="pongCanvas" width="800" height="600"></canvas>
     <script src="pong.js"></script>
 </body>
 </html>
